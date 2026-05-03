@@ -8,8 +8,7 @@
     "backend"
   ],
   "scripts": {
-    "build": "cd frontend-web && npm install && npm run build",
-    "install": "npm install --workspaces"
+    "build": "npm run build --workspace=frontend-web"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
