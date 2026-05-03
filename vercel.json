@@ -5,11 +5,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://YOUR-ADAPTABLE-URL.adaptable.app/api/$1"
+      "destination": "https://YOUR-RENDER-URL.onrender.com/api/$1"
     },
     {
       "source": "/uploads/(.*)",
-      "destination": "https://YOUR-ADAPTABLE-URL.adaptable.app/uploads/$1"
+      "destination": "https://YOUR-RENDER-URL.onrender.com/uploads/$1"
     },
     {
       "source": "/(.*)",
