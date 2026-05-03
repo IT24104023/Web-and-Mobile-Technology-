@@ -8,7 +8,8 @@
     "backend"
   ],
   "scripts": {
-    "build": "npm run build --workspace=frontend-web"
+    "build": "npm run build --workspace=frontend-web",
+    "start": "npm start --workspace=backend"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
