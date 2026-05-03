@@ -1,0 +1,14 @@
+{
+  "name": "wmt-project-root",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "frontend-web",
+    "backend"
+  ],
+  "scripts": {
+    "build": "cd frontend-web && npm install && npm run build",
+    "install": "npm install --workspaces"
+  }
+}
