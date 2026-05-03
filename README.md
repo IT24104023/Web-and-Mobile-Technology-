@@ -4,8 +4,8 @@ A premium, full-stack MERN application designed for modern dental clinic managem
 
 ## 🚀 Deployment Status
 
-- **Frontend (Web):** Deployed on **Vercel**
-- **Backend (API):** Deployed on **Adaptable.io**
+- **Frontend (Web):** Deployed on **Vercel** or **Render**
+- **Backend (API):** Deployed on **Render** (Unified) or **Adaptable.io**
 - **Mobile App:** Built with **React Native / Expo**
 
 ---
@@ -16,7 +16,7 @@ A premium, full-stack MERN application designed for modern dental clinic managem
 - **Smart Dashboard:** View upcoming appointments and health status.
 - **Appointment Booking:** Real-time scheduling with automatic 24-hour cancellation rules.
 - **Digital Prescriptions:** Access medical history and prescriptions on the go.
-- **Feedback System:** Rate and review services to improve clinic quality.
+- **Emergency Care:** Rapid access to emergency contacts and clinic details.
 
 ### 👨‍⚕️ Doctor Dashboard
 - **Patient Management:** Track patient history and ongoing treatments.
@@ -25,18 +25,18 @@ A premium, full-stack MERN application designed for modern dental clinic managem
 
 ### 🔑 Admin Panel
 - **User Management:** Control access for doctors, staff, and patients.
+- **Clinic Inventory:** Manage medicines and medical supplies.
 - **System Analytics:** Monitor clinic performance and feedback.
-- **Emergency Management:** Manage emergency contacts and protocols.
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Frontend:** React.js, Vite, Tailwind CSS (Modern UI/UX)
+- **Frontend:** React.js, Vite, Vanilla CSS (Premium Aesthetics)
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB Atlas
 - **Mobile:** React Native, Expo
-- **Authentication:** JSON Web Tokens (JWT) with secure password hashing.
+- **Authentication:** JWT (JSON Web Tokens)
 
 ---
 
@@ -44,11 +44,11 @@ A premium, full-stack MERN application designed for modern dental clinic managem
 
 ```text
 ├── backend/            # Express API Server
-├── frontend-web/       # React Web Application
-├── frontend-mobile/    # React Native Mobile App
-├── api/                # Vercel Serverless Entry (Proxy)
-├── package.json        # Root Workspace Configuration
-└── vercel.json         # Vercel Deployment Settings
+├── frontend-web/       # React Web Application (Vite)
+├── frontend-mobile/    # React Native Mobile App (Expo)
+├── render.yaml         # Render Deployment Blueprint
+├── vercel.json         # Vercel Deployment Settings
+└── package.json        # Root Workspace Configuration
 ```
 
 ---
@@ -56,7 +56,7 @@ A premium, full-stack MERN application designed for modern dental clinic managem
 ## ⚙️ Local Development
 
 ### Prerequisites
-- Node.js (v18+)
+- Node.js (v20+)
 - MongoDB Atlas Account
 
 ### Setup
@@ -80,26 +80,24 @@ A premium, full-stack MERN application designed for modern dental clinic managem
 
 4. **Run the Application:**
    ```bash
-   # Start Backend
-   npm start --workspace=backend
-
-   # Start Web Frontend
-   npm run dev --workspace=frontend-web
+   # Start everything (Workspaces)
+   npm run dev
    ```
 
 ---
 
 ## 🌍 Hosting Configuration
 
-### Backend (Adaptable.io)
-The backend is configured to run from the root using the `npm start` command. 
-- **Build Command:** `npm install`
+### Unified Deployment (Render - Recommended)
+The project is optimized for a unified deployment where the backend serves the frontend.
+- **Build Command:** `npm install && npm run build`
 - **Start Command:** `npm start`
+- **Root Directory:** `./`
 
 ### Frontend (Vercel)
-The web frontend is deployed as a static site with an API proxy.
 - **Build Command:** `npm run build --workspace=frontend-web`
 - **Output Directory:** `frontend-web/dist`
+
 
 ---
 

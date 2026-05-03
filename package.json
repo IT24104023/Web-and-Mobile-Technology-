@@ -9,9 +9,12 @@
   ],
   "scripts": {
     "build": "npm run build --workspace=frontend-web",
-    "start": "npm start --workspace=backend"
+    "start": "npm start --workspace=backend",
+    "dev": "concurrently \"npm run dev --workspace=backend\" \"npm run dev --workspace=frontend-web\""
   },
   "dependencies": {
+    "concurrently": "^8.2.2",
+
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
