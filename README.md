@@ -4,8 +4,8 @@ A premium, full-stack MERN application designed for modern dental clinic managem
 
 ## 🚀 Deployment Status
 
-- **Frontend (Web):** Deployed on **Vercel** or **Render**
-- **Backend (API):** Deployed on **Render** (Unified) or **Adaptable.io**
+- **Web Portal (Render):** [Live Site on Render](https://web-and-mobile-technology.onrender.com/)
+- **Web Portal (Vercel):** [Live Site on Vercel](https://web-and-mobile-technology.vercel.app/login)
 - **Mobile App:** Built with **React Native / Expo**
 
 ---
@@ -53,6 +53,41 @@ A premium, full-stack MERN application designed for modern dental clinic managem
 
 ---
 
+## 🛠 Quick Deployment Guide (For New Users)
+
+If you have downloaded this project as a **ZIP file**, follow these steps to deploy it to your own accounts:
+
+### 1. Database Setup
+1. Create a free cluster on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+2. Go to **Database Access** and create a user with "Read and Write to any database" permissions.
+3. Go to **Network Access** and add IP address `0.0.0.0/0` (Allow access from anywhere).
+4. Get your **Connection String** (e.g., `mongodb+srv://...`).
+
+### 2. Deployment to Render (Recommended)
+1. Push your code to a **GitHub Repository**.
+2. Log in to [Render](https://render.com/).
+3. Click **New +** > **Web Service**.
+4. Connect your GitHub repository.
+5. Render will automatically detect the `render.yaml` file. Click **Create New Resources**.
+6. In the Render Dashboard, go to your Web Service > **Environment**.
+7. Add the following **Environment Variables**:
+   - `MONGO_URI`: Your MongoDB connection string.
+   - `JWT_SECRET`: A random strong string (e.g., `my_ultra_secure_secret`).
+   - `PORT`: `10000`
+   - `NODE_ENV`: `production`
+
+### 3. Deployment to Vercel (Alternative)
+1. Log in to [Vercel](https://vercel.com/).
+2. Click **Add New** > **Project**.
+3. Import your GitHub repository.
+4. Vercel will detect the `vercel.json` and root configuration.
+5. In **Environment Variables**, add:
+   - `MONGO_URI`: Your MongoDB connection string.
+   - `JWT_SECRET`: Your secret key.
+6. Click **Deploy**.
+
+---
+
 ## ⚙️ Local Development
 
 ### Prerequisites
@@ -97,7 +132,6 @@ The project is optimized for a unified deployment where the backend serves the f
 ### Frontend (Vercel)
 - **Build Command:** `npm run build --workspace=frontend-web`
 - **Output Directory:** `frontend-web/dist`
-
 
 ---
 
