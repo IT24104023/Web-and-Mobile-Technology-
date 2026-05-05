@@ -4,7 +4,7 @@ import { Medicine } from "../models/Medicine.js";
 export const createOrder = async (req, res) => {
   try {
     const { prescriptionId, items } = req.body;
-    const patientId = req.user.userId;
+    const patientId = req.user.user_id;
 
     let totalAmount = 0;
     
@@ -35,7 +35,7 @@ export const createOrder = async (req, res) => {
 
 export const getPatientOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ patient: req.user.userId })
+    const orders = await Order.find({ patient: req.user.user_id })
       .populate('prescription')
       .sort({ createdAt: -1 });
     res.status(200).json(orders);

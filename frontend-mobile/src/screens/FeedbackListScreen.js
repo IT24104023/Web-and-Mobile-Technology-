@@ -40,7 +40,13 @@ export default function FeedbackListScreen() {
           <Text style={styles.title}>My Feedback</Text>
           <Text style={styles.subtitle}>Rate your completed consultations</Text>
         </View>
-        <TouchableOpacity style={styles.newBtn} onPress={() => nav.navigate('FeedbackForm')}>
+        <TouchableOpacity 
+          style={styles.newBtn} 
+          onPress={() => {
+            Alert.alert('New Feedback', 'Please select a completed appointment from your history to provide feedback.');
+            nav.navigate('Appointments');
+          }}
+        >
           <Text style={styles.newBtnText}>+ New Feedback</Text>
         </TouchableOpacity>
       </View>

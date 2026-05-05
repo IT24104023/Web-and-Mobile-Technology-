@@ -1,9 +1,54 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 import { useAuth } from '../context/AuthContext';
+import { authAPI } from '../services/api';
 
 export default function ProfileScreen({ navigation }) {
   const { user, logout } = useAuth();
+
+  const handleDeactivate = () => {
+    Alert.alert(
+      "Deactivate Account",
+      "Are you sure you want to deactivate your account? You will be logged out.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { 
+          text: "Deactivate", 
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await authAPI.deactivateAccount();
+              logout();
+            } catch (error) {
+              Alert.alert("Error", error.response?.data?.message || "Failed to deactivate account.");
+            }
+          }
+        }
+      ]
+    );
+  };
+
+  const handleDelete = () => {
+    Alert.alert(
+      "Delete Account",
+      "Are you sure you want to completely delete your account? This action cannot be undone.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { 
+          text: "Delete", 
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await authAPI.deleteAccount();
+              logout();
+            } catch (error) {
+              Alert.alert("Error", error.response?.data?.message || "Failed to delete account.");
+            }
+          }
+        }
+      ]
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -64,6 +109,14 @@ export default function ProfileScreen({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity style={styles.settingRow}>
             <Text style={styles.settingText}>❓ Help & Support</Text>
+            <Text style={styles.settingArrow}>›</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.settingRow} onPress={handleDeactivate}>
+            <Text style={styles.settingText}>⏸️ Deactivate Account</Text>
+            <Text style={styles.settingArrow}>›</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.settingRow} onPress={handleDelete}>
+            <Text style={styles.settingText}>🗑️ Delete Account</Text>
             <Text style={styles.settingArrow}>›</Text>
           </TouchableOpacity>
         </View>

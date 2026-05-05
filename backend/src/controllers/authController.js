@@ -2,6 +2,12 @@ import bcrypt from "bcryptjs";
 import { Doctor } from "../models/Doctor.js";
 import { Patient } from "../models/Patient.js";
 import { User } from "../models/User.js";
+import { Appointment } from "../models/Appointment.js";
+import { EmergencyContact } from "../models/EmergencyContact.js";
+import Feedback from "../models/Feedback.js";
+import { Prescription } from "../models/Prescription.js";
+import { Order } from "../models/Order.js";
+import { Admin } from "../models/Admin.js";
 import { createToken } from "../utils/createToken.js";
 
 const validRolesForRegistration = ["patient", "doctor"];
@@ -465,6 +471,56 @@ export const changePassword = async (req, res) => {
   } catch (error) {
     console.error("Password change error:", error);
     return res.status(500).json({ message: "Failed to change password", error: error.message });
+  }
+};
+
+export const deactivateAccount = async (req, res) => {
+  try {
+    const { user_id } = req.user;
+    const user = await User.findById(user_id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.status = "inactive";
+    await user.save();
+    return res.status(200).json({ message: "Account deactivated successfully" });
+  } catch (error) {
+    console.error("Deactivate account error:", error);
+    return res.status(500).json({ message: "Failed to deactivate account", error: error.message });
+  }
+};
+
+export const deleteAccount = async (req, res) => {
+  try {
+    const { user_id } = req.user;
+    const user = await User.findById(user_id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // 1. Delete Role Specific Data
+    if (user.role === "patient") {
+      await Patient.findOneAndDelete({ user_id });
+    } else if (user.role === "doctor") {
+      await Doctor.findOneAndDelete({ user_id });
+    } else if (user.role === "admin") {
+      await Admin.findOneAndDelete({ user_id });
+    }
+
+    // 2. Cascade Delete All Related Records
+    await Appointment.deleteMany({ $or: [{ patientId: user_id }, { doctorId: user_id }] });
+    await EmergencyContact.deleteMany({ patientId: user_id });
+    await Feedback.deleteMany({ $or: [{ patientId: user_id }, { doctorId: user_id }] });
+    await Prescription.deleteMany({ $or: [{ patient: user_id }, { doctor: user_id }] });
+    await Order.deleteMany({ patient: user_id });
+    
+    // 3. Delete Core User Data
+    await User.findByIdAndDelete(user_id);
+
+    return res.status(200).json({ message: "Account and all associated data deleted successfully" });
+  } catch (error) {
+    console.error("Delete account error:", error);
+    return res.status(500).json({ message: "Failed to delete account", error: error.message });
   }
 };
 

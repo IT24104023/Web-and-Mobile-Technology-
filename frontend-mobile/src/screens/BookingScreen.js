@@ -75,19 +75,11 @@ export default function BookingScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backText}>← Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Book Appointment</Text>
-        <View style={{ width: 40 }} />
-      </View>
-
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.section}>
           <Text style={styles.label}>Select Doctor</Text>
           {fetchingDoctors ? (
-            <ActivityIndicator color="#6366f1" />
+            <ActivityIndicator color="#0d9488" />
           ) : (
             doctors.map((doctor) => (
               <TouchableOpacity
@@ -150,6 +142,7 @@ export default function BookingScreen({ navigation }) {
             value={reason}
             onChangeText={setReason}
             placeholder="Describe your dental concern..."
+            placeholderTextColor="#94a3b8"
             multiline={true}
             numberOfLines={4}
           />
@@ -176,25 +169,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f8fafc',
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e2e8f0',
-  },
-  backText: {
-    fontSize: 16,
-    color: '#6366f1',
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1e293b',
-  },
   content: {
     padding: 20,
   },
@@ -202,64 +176,67 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   label: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '700',
     color: '#1e293b',
     marginBottom: 12,
+    letterSpacing: 0.5,
   },
   doctorCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
-    marginBottom: 8,
+    marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#e2e8f0',
   },
   doctorCardActive: {
-    borderColor: '#6366f1',
-    backgroundColor: '#f5f3ff',
+    borderColor: '#0d9488',
+    backgroundColor: '#f0fdfa',
+    borderWidth: 2,
   },
   doctorInfo: {
     flex: 1,
   },
   doctorName: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: 'bold',
     color: '#1e293b',
   },
   doctorSpecialization: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#64748b',
-    marginTop: 4,
+    marginTop: 2,
   },
   checkmark: {
-    fontSize: 24,
-    color: '#6366f1',
+    fontSize: 20,
+    color: '#0d9488',
     fontWeight: 'bold',
   },
   datesContainer: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 10,
   },
   dateCard: {
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 12,
+    paddingVertical: 14,
+    borderRadius: 14,
     backgroundColor: '#ffffff',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#e2e8f0',
     minWidth: 100,
   },
   dateCardActive: {
-    backgroundColor: '#6366f1',
-    borderColor: '#6366f1',
+    backgroundColor: '#0d9488',
+    borderColor: '#0d9488',
   },
   dateText: {
     fontSize: 12,
-    color: '#1e293b',
+    color: '#475569',
+    fontWeight: '600',
     textAlign: 'center',
   },
   dateTextActive: {
@@ -267,23 +244,23 @@ const styles = StyleSheet.create({
   },
   slotsContainer: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 10,
   },
   slotCard: {
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
     backgroundColor: '#ffffff',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#e2e8f0',
   },
   slotCardActive: {
-    backgroundColor: '#6366f1',
-    borderColor: '#6366f1',
+    backgroundColor: '#0d9488',
+    borderColor: '#0d9488',
   },
   slotText: {
-    fontSize: 12,
-    color: '#1e293b',
+    fontSize: 13,
+    color: '#475569',
     fontWeight: '600',
   },
   slotTextActive: {
@@ -291,29 +268,36 @@ const styles = StyleSheet.create({
   },
   textArea: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#e2e8f0',
-    minHeight: 100,
+    minHeight: 120,
     textAlignVertical: 'top',
     fontSize: 15,
     color: '#1e293b',
   },
   bookButton: {
-    backgroundColor: '#6366f1',
+    backgroundColor: '#0d9488',
     paddingVertical: 16,
-    borderRadius: 12,
+    borderRadius: 16,
     alignItems: 'center',
     marginBottom: 40,
+    shadowColor: '#0d9488',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   bookButtonDisabled: {
     backgroundColor: '#94a3b8',
+    shadowOpacity: 0,
+    elevation: 0,
   },
   bookButtonText: {
     color: '#ffffff',
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
 });
 

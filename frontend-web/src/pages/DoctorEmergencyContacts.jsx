@@ -39,7 +39,7 @@ export default function DoctorEmergencyContacts() {
     setNotFound(false);
     setRecord(null);
     try {
-      const res = await api.get(`/emergency-contacts/patient/${pid.trim()}`, {
+      const res = await api.get(`/emergency/patient/${pid.trim()}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRecord(res.data.data);
@@ -54,7 +54,7 @@ export default function DoctorEmergencyContacts() {
     if (!record) return;
     setDeleting(true);
     try {
-      await api.delete(`/emergency-contacts/patient/${record.patient_id?._id || record.patient_id}`, {
+      await api.delete(`/emergency/admin/${record.patient_id?._id || record.patient_id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       showToast("Emergency contact record deleted.");

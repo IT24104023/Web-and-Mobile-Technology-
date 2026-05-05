@@ -188,39 +188,46 @@ const EmergencyContacts = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topBar}>
-        <Text style={styles.title}>Emergency Contacts</Text>
-        <TouchableOpacity style={styles.addButton} onPress={() => openModal()}>
-          <Text style={styles.addButtonText}>+ Add</Text>
-        </TouchableOpacity>
-      </View>
-
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#007AFF" />
+          <ActivityIndicator size="large" color="#0d9488" />
           <Text style={styles.loadingText}>Loading contacts...</Text>
         </View>
       ) : contacts.length === 0 ? (
         <View style={styles.emptyContainer}>
           <Text style={styles.emptyTitle}>No emergency contacts yet.</Text>
           <Text style={styles.emptySubtitle}>Add a trusted contact so your care team can reach them quickly.</Text>
+          <TouchableOpacity style={styles.bookFirstButton} onPress={() => openModal()}>
+            <Text style={styles.bookFirstText}>Add Contact</Text>
+          </TouchableOpacity>
         </View>
       ) : (
-        <FlatList
-          data={contacts}
-          keyExtractor={(item) => item._id}
-          renderItem={renderContact}
-          contentContainerStyle={styles.listContainer}
-          refreshing={loading}
-          onRefresh={() => fetchContacts()}
-        />
+        <>
+          <FlatList
+            data={contacts}
+            keyExtractor={(item) => item._id}
+            renderItem={renderContact}
+            contentContainerStyle={styles.listContainer}
+            refreshing={loading}
+            onRefresh={() => fetchContacts()}
+          />
+          <TouchableOpacity style={styles.fab} onPress={() => openModal()}>
+            <Text style={styles.fabText}>+</Text>
+          </TouchableOpacity>
+        </>
       )}
 
       <Modal animationType="slide" transparent visible={modalVisible} onRequestClose={closeModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <ScrollView>
-              <Text style={styles.modalTitle}>{editingContact ? 'Edit Contact' : 'Add Contact'}</Text>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={styles.modalHeader}>
+                <Text style={styles.modalTitle}>{editingContact ? 'Edit Contact' : 'Add Contact'}</Text>
+                <TouchableOpacity onPress={closeModal}>
+                  <Text style={styles.closeModalText}>✕</Text>
+                </TouchableOpacity>
+              </View>
+
               <View style={styles.inputGroup}>
                 <Text style={styles.inputLabel}>Name</Text>
                 <TextInput
@@ -228,6 +235,7 @@ const EmergencyContacts = () => {
                   value={name}
                   onChangeText={setName}
                   placeholder="Contact name"
+                  placeholderTextColor="#94a3b8"
                 />
               </View>
               <View style={styles.inputGroup}>
@@ -237,6 +245,7 @@ const EmergencyContacts = () => {
                   value={relationship}
                   onChangeText={setRelationship}
                   placeholder="Relationship"
+                  placeholderTextColor="#94a3b8"
                 />
               </View>
               <View style={styles.inputGroup}>
@@ -246,6 +255,7 @@ const EmergencyContacts = () => {
                   value={phone}
                   onChangeText={setPhone}
                   placeholder="Primary phone"
+                  placeholderTextColor="#94a3b8"
                   keyboardType="phone-pad"
                 />
               </View>
@@ -256,6 +266,7 @@ const EmergencyContacts = () => {
                   value={alternatePhone}
                   onChangeText={setAlternatePhone}
                   placeholder="Alternate phone"
+                  placeholderTextColor="#94a3b8"
                   keyboardType="phone-pad"
                 />
               </View>
@@ -266,23 +277,24 @@ const EmergencyContacts = () => {
                   value={email}
                   onChangeText={setEmail}
                   placeholder="Email address"
+                  placeholderTextColor="#94a3b8"
                   keyboardType="email-address"
                   autoCapitalize="none"
                 />
               </View>
               <View style={styles.switchRow}>
                 <Text style={styles.inputLabel}>Primary contact</Text>
-                <Switch value={!!isPrimary} onValueChange={setIsPrimary} thumbColor={isPrimary ? '#007AFF' : '#f4f3f4'} />
+                <Switch 
+                  value={!!isPrimary} 
+                  onValueChange={setIsPrimary} 
+                  trackColor={{ false: '#e2e8f0', true: '#0d9488' }}
+                  thumbColor="#fff"
+                />
               </View>
 
-              <View style={styles.modalActionRow}>
-                <TouchableOpacity style={styles.cancelButton} onPress={closeModal} disabled={submitting}>
-                  <Text style={styles.cancelText}>Cancel</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.saveButton} onPress={submitContact} disabled={submitting}>
-                  <Text style={styles.saveText}>{submitting ? 'Saving...' : 'Save'}</Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity style={styles.saveButton} onPress={submitContact} disabled={submitting}>
+                <Text style={styles.saveText}>{submitting ? 'Saving...' : 'Save Contact'}</Text>
+              </TouchableOpacity>
             </ScrollView>
           </View>
         </View>
@@ -294,32 +306,7 @@ const EmergencyContacts = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F4F6FA',
-  },
-  topBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#111827',
-  },
-  addButton: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 10,
-  },
-  addButtonText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
-    fontSize: 15,
+    backgroundColor: '#f8fafc',
   },
   loadingContainer: {
     flex: 1,
@@ -328,160 +315,191 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     marginTop: 12,
-    color: '#6B7280',
+    color: '#64748b',
+    fontWeight: '500',
   },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: 40,
   },
   emptyTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#111827',
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1e293b',
   },
   emptySubtitle: {
     marginTop: 8,
-    fontSize: 15,
-    color: '#6B7280',
+    fontSize: 14,
+    color: '#64748b',
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 20,
+    marginBottom: 24,
+  },
+  bookFirstButton: {
+    backgroundColor: '#0d9488',
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 12,
+  },
+  bookFirstText: {
+    color: '#fff',
+    fontWeight: '600',
   },
   listContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    padding: 16,
+    paddingBottom: 100,
   },
   contactCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 16,
-    marginBottom: 14,
+    marginBottom: 16,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: '#e2e8f0',
     shadowColor: '#000',
     shadowOpacity: 0.05,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 2 },
   },
   primaryContact: {
-    borderColor: '#F59E0B',
-    backgroundColor: '#FFFBEB',
+    borderColor: '#0d9488',
+    backgroundColor: '#f0fdfa',
+    borderWidth: 2,
   },
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 6,
+    marginBottom: 8,
   },
   contactName: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#111827',
+    fontWeight: 'bold',
+    color: '#1e293b',
   },
   primaryBadge: {
-    fontSize: 13,
-    color: '#B45309',
-    fontWeight: '700',
+    fontSize: 11,
+    color: '#0d9488',
+    fontWeight: '800',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   contactText: {
-    fontSize: 15,
-    color: '#374151',
+    fontSize: 14,
+    color: '#475569',
     marginTop: 4,
   },
   actionRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 14,
+    marginTop: 16,
+    gap: 8,
   },
   actionButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    backgroundColor: '#E5E7EB',
-    marginRight: 8,
-    marginTop: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    backgroundColor: '#f1f5f9',
   },
   deleteButton: {
-    backgroundColor: '#FECACA',
+    backgroundColor: '#fef2f2',
   },
   primaryButton: {
-    backgroundColor: '#D1FAE5',
+    backgroundColor: '#f0fdfa',
   },
   actionLabel: {
-    color: '#111827',
+    color: '#475569',
     fontWeight: '600',
+    fontSize: 12,
+  },
+  fab: {
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#0d9488',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#0d9488',
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 5,
+  },
+  fabText: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(17, 24, 39, 0.45)',
-    justifyContent: 'center',
-    padding: 20,
+    backgroundColor: 'rgba(15, 23, 42, 0.5)',
+    justifyContent: 'flex-end',
   },
   modalContent: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    padding: 20,
-    maxHeight: '90%',
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    padding: 24,
+    maxHeight: '85%',
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 24,
   },
   modalTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#1e293b',
+  },
+  closeModalText: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: 18,
+    color: '#64748b',
+    fontWeight: 'bold',
   },
   inputGroup: {
-    marginBottom: 14,
+    marginBottom: 16,
   },
   inputLabel: {
     fontSize: 14,
-    marginBottom: 6,
-    color: '#374151',
-    fontWeight: '600',
+    marginBottom: 8,
+    color: '#475569',
+    fontWeight: '700',
   },
   input: {
-    backgroundColor: '#F8FAFC',
+    backgroundColor: '#f8fafc',
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: '#e2e8f0',
     borderRadius: 12,
     padding: 14,
     fontSize: 15,
-    color: '#111827',
+    color: '#1e293b',
   },
   switchRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 18,
-  },
-  modalActionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 6,
-  },
-  cancelButton: {
-    flex: 1,
-    backgroundColor: '#E5E7EB',
-    paddingVertical: 14,
-    borderRadius: 12,
-    marginRight: 8,
-    alignItems: 'center',
+    marginBottom: 24,
+    backgroundColor: '#f8fafc',
+    padding: 16,
+    borderRadius: 16,
   },
   saveButton: {
-    flex: 1,
-    backgroundColor: '#007AFF',
-    paddingVertical: 14,
-    borderRadius: 12,
-    marginLeft: 8,
+    backgroundColor: '#0d9488',
+    paddingVertical: 16,
+    borderRadius: 16,
     alignItems: 'center',
-  },
-  cancelText: {
-    color: '#111827',
-    fontWeight: '700',
+    marginBottom: 20,
   },
   saveText: {
     color: '#FFFFFF',
-    fontWeight: '700',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 

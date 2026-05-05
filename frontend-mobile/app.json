@@ -1,4 +1,4 @@
-﻿{
+{
   "expo": {
     "name": "DentAI",
     "slug": "dentai-mobile",
@@ -26,7 +26,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "apiBaseUrl": "http://172.28.30.202:5000"
+      "apiBaseUrl": "https://web-and-mobile-technology.onrender.com"
     }
   }
 }

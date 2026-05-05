@@ -73,24 +73,29 @@ export default function AppointmentsScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       )}
+
+      {item.status === 'completed' && (
+        <View style={styles.actions}>
+          <TouchableOpacity 
+            style={styles.feedbackButton} 
+            onPress={() => navigation.navigate('FeedbackForm', { 
+              appointmentId: item._id, 
+              doctorId: item.doctorId, 
+              doctorName: item.doctorName 
+            })}
+          >
+            <Text style={styles.feedbackButtonText}>Give Feedback</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backText}>← Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>My Appointments</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Booking')}>
-          <Text style={styles.addText}>+ New</Text>
-        </TouchableOpacity>
-      </View>
-
       {loading ? (
         <View style={styles.centerContainer}>
-          <ActivityIndicator size="large" color="#6366f1" />
+          <ActivityIndicator size="large" color="#0d9488" />
         </View>
       ) : appointments.length === 0 ? (
         <View style={styles.centerContainer}>
@@ -121,32 +126,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f8fafc',
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e2e8f0',
-  },
-  backText: {
-    fontSize: 16,
-    color: '#6366f1',
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1e293b',
-  },
-  addText: {
-    fontSize: 16,
-    color: '#6366f1',
-    fontWeight: '600',
-  },
   content: {
-    padding: 20,
+    padding: 16,
   },
   centerContainer: {
     flex: 1,
@@ -156,20 +137,22 @@ const styles = StyleSheet.create({
   },
   appointmentCard: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 16,
     marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
     elevation: 2,
   },
   appointmentHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   appointmentTitle: {
     fontSize: 16,
@@ -179,43 +162,61 @@ const styles = StyleSheet.create({
   status: {
     fontSize: 11,
     fontWeight: '700',
+    letterSpacing: 0.5,
   },
   detail: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#64748b',
     marginTop: 4,
   },
   actions: {
     flexDirection: 'row',
     gap: 8,
-    marginTop: 12,
+    marginTop: 15,
   },
   cancelButton: {
     flex: 1,
-    backgroundColor: '#fee2e2',
+    backgroundColor: '#fef2f2',
     paddingVertical: 10,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#fecaca',
   },
   cancelButtonText: {
-    color: '#ef4444',
+    color: '#dc2626',
+    fontWeight: '700',
+    fontSize: 13,
+  },
+  feedbackButton: {
+    flex: 1,
+    backgroundColor: '#f0fdfa',
+    paddingVertical: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccfbf1',
+  },
+  feedbackButtonText: {
+    color: '#0d9488',
     fontWeight: '700',
     fontSize: 13,
   },
   emptyText: {
     color: '#64748b',
-    fontSize: 16,
+    fontSize: 15,
     marginBottom: 20,
   },
   bookFirstButton: {
-    backgroundColor: '#6366f1',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 10,
+    backgroundColor: '#0d9488',
+    paddingHorizontal: 24,
+    paddingVertical: 14,
+    borderRadius: 12,
   },
   bookFirstText: {
     color: '#fff',
     fontWeight: '600',
+    fontSize: 15,
   }
 });
 

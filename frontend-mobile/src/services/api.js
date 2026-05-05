@@ -81,6 +81,8 @@ export const authAPI = {
   updateProfile: (data) => api.put('/auth/profile', data),
   changePassword: (data) => api.put('/auth/change-password', data),
   getDoctors: () => api.get('/auth/users?role=doctor'),
+  deactivateAccount: () => api.put('/auth/deactivate'),
+  deleteAccount: () => api.delete('/auth/delete'),
 };
 
 // ─── Patient API ──────────────────────────────────────────────────────────────
@@ -112,6 +114,15 @@ export const adminAPI = {
   getAllAppointments: (params) => api.get('/appointments/all', { params }),
   updateAppointment: (id, data) => api.put(`/appointments/admin/${id}`, data),
   deleteAppointment: (id) => api.delete(`/appointments/admin/${id}`),
+};
+
+// ─── Feedback API ─────────────────────────────────────────────────────────────
+export const feedbackAPI = {
+  getMyFeedbacks: () => api.get('/feedback/my'),
+  getClinicReviews: () => api.get('/feedback/clinic-reviews'),
+  submitFeedback: (data) => api.post('/feedback', data),
+  editFeedback: (id, data) => api.put(`/feedback/${id}`, data),
+  deleteFeedback: (id) => api.delete(`/feedback/${id}`),
 };
 
 export default api;

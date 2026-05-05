@@ -3,7 +3,7 @@ import { Prescription } from "../models/Prescription.js";
 export const createPrescription = async (req, res) => {
   try {
     const { patientId, medicines } = req.body;
-    const doctorId = req.user.userId;
+    const doctorId = req.user.user_id;
 
     const prescription = new Prescription({
       patient: patientId,
@@ -20,7 +20,7 @@ export const createPrescription = async (req, res) => {
 
 export const getPatientPrescriptions = async (req, res) => {
   try {
-    const patientId = req.user.role === 'patient' ? req.user.userId : req.params.patientId;
+    const patientId = req.user.role === 'patient' ? req.user.user_id : req.params.patientId;
     const prescriptions = await Prescription.find({ patient: patientId })
       .populate('doctor', 'full_name')
       .populate('medicines.medicine')
@@ -33,7 +33,7 @@ export const getPatientPrescriptions = async (req, res) => {
 
 export const getDoctorPrescriptions = async (req, res) => {
   try {
-    const prescriptions = await Prescription.find({ doctor: req.user.userId })
+    const prescriptions = await Prescription.find({ doctor: req.user.user_id })
       .populate('patient', 'full_name')
       .sort({ createdAt: -1 });
     res.status(200).json(prescriptions);

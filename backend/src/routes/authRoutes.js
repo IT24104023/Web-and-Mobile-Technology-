@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register, getPatientSettings, updatePatientSettings, updateProfile, changePassword, getUsersByRole, getDoctorsWithSpecialization, updateUserStatus } from "../controllers/authController.js";
+import { login, register, getPatientSettings, updatePatientSettings, updateProfile, changePassword, getUsersByRole, getDoctorsWithSpecialization, updateUserStatus, deactivateAccount, deleteAccount } from "../controllers/authController.js";
 import { uploadProfileImage } from "../middleware/upload.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -14,5 +14,7 @@ router.put("/patient/settings", verifyToken, uploadProfileImage.single("profile_
 router.put("/profile", verifyToken, uploadProfileImage.single("profile_image"), updateProfile);
 router.put("/change-password", verifyToken, changePassword);
 router.put("/users/:userId/status", verifyToken, updateUserStatus);
+router.put("/deactivate", verifyToken, deactivateAccount);
+router.delete("/delete", verifyToken, deleteAccount);
 
 export default router;
